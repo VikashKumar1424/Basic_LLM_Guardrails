@@ -54,7 +54,7 @@ This project serves as an educational resource for developers looking to impleme
 
 ### Frontend
 
-- iOS/Swift application for client-side interaction
+- iOS/SwiftUIUI application for client-side interaction
 - Seamless communication with backend API
 
 ---
@@ -76,7 +76,7 @@ Basic_GuardRails/
 │   └── .env.example             # Environment configuration template
 ├── forntend/
 │   └── Guardrails/
-│       └── Guardrails/          # iOS Swift application
+│       └── Guardrails/          # iOS SwiftUI application
 ├── README.md                    # Project documentation
 └── .gitignore
 ```
@@ -101,7 +101,7 @@ Basic_GuardRails/
 | Component | Technology |
 |-----------|-----------|
 | Platform | iOS |
-| Language | Swift |
+| Language | SwiftUI |
 
 ---
 
