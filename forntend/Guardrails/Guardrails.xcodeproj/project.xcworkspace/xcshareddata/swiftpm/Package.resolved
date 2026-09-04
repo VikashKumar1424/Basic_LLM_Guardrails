@@ -1,0 +1,24 @@
+{
+  "originHash" : "a7bd4d136ec0091c0de908ef56732b228a938057eca896dac8e03f5f07fe58d7",
+  "pins" : [
+    {
+      "identity" : "inputbaraccessoryview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nathantannar4/InputBarAccessoryView",
+      "state" : {
+        "revision" : "a8948bd29c7f9acf7f8b19a813f78510736b0c99",
+        "version" : "7.0.6"
+      }
+    },
+    {
+      "identity" : "messagekit?utm_source=chatgpt.com",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/MessageKit/MessageKit?utm_source=chatgpt.com",
+      "state" : {
+        "revision" : "dc48356f830d40de5acc0e126a44257d0a1329b6",
+        "version" : "5.0.0"
+      }
+    }
+  ],
+  "version" : 3
+}
