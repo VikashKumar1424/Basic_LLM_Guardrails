@@ -1,6 +1,6 @@
 # Basic_GuardRails
 
-A comprehensive AI application guardrails system demonstrating multiple layers of security and safety controls for LLM-powered applications. This project integrates **Google Gemini** with **LangChain** and implements input validation, PII detection, prompt injection prevention, and output filtering.
+A comprehensive AI application guardrails system demonstrating multiple layers of security and safety controls for LLM-powered applications. This project integrates **Google Gemini** with **LangChain** and features a **SwiftUI iOS client** for secure AI interactions.
 
 ---
 
@@ -8,6 +8,7 @@ A comprehensive AI application guardrails system demonstrating multiple layers o
 
 - [Overview](#overview)
 - [Features](#features)
+- [Architecture Diagram](#architecture-diagram)
 - [Project Structure](#project-structure)
 - [Tech Stack](#tech-stack)
 - [Prerequisites](#prerequisites)
@@ -27,7 +28,7 @@ A comprehensive AI application guardrails system demonstrating multiple layers o
 
 ## 🎯 Overview
 
-**Basic_GuardRails** demonstrates best practices for securing AI applications by implementing a multi-layered guardrail system. The backend processes user requests through a series of safety checks before sending them to the Google Gemini model, ensuring that only safe, legitimate requests are processed.
+**Basic_GuardRails** demonstrates best practices for securing AI applications by implementing a multi-layered guardrail system. The backend processes user requests through a series of safety checks before sending them to Google Gemini, then validates the output before returning to the client.
 
 This project serves as an educational resource for developers looking to implement safety controls in their AI-powered applications.
 
@@ -54,8 +55,89 @@ This project serves as an educational resource for developers looking to impleme
 
 ### Frontend
 
-- iOS/SwiftUIUI application for client-side interaction
+- iOS/SwiftUI application for client-side interaction
 - Seamless communication with backend API
+
+---
+
+## 🏗️ Architecture Diagram
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                       iOS SwiftUI Frontend                           │
+│                    (Guardrails Application)                          │
+└────────────────────────────┬────────────────────────────────────────┘
+                             │
+                    HTTP/REST API Request
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                     FastAPI Backend Server                           │
+│                      (http://localhost:8000)                         │
+│                                                                       │
+│  ┌──────────────────────────────────────────────────────────────┐   │
+│  │                  Request Processing Pipeline                  │   │
+│  │                                                                │   │
+│  │  ┌─────────────────────────────────────────────────────────┐ │   │
+│  │  │ [1] INPUT GUARD                                         │ │   │
+│  │  │ • Format validation                                     │ │   │
+│  │  │ • Length check (max 2000 chars)                         │ │   │
+│  │  └─────────────────────────────────────────────────────────┘ │   │
+│  │                         │                                     │   │
+│  │                         ▼                                     │   │
+│  │  ┌─────────────────────────────────────────────────────────┐ │   │
+│  │  │ [2] PII GUARD                                           │ │   │
+│  │  │ • Email detection                                       │ │   │
+│  │  │ • Phone number detection (Indian format)                │ │   │
+│  │  │ • Payment card detection + Luhn validation              │ │   │
+│  │  └─────────────────────────────────────────────────────────┘ │   │
+│  │                         │                                     │   │
+│  │                         ▼                                     │   │
+│  │  ┌─────────────────────────────────────────────────────────┐ │   │
+│  │  │ [3] INJECTION GUARD                                     │ │   │
+│  │  │ • System prompt revelation prevention                   │ │   │
+│  │  │ • Instruction bypass detection                          │ │   │
+│  │  │ • Guardrail disable attempt blocking                    │ │   │
+│  │  │ • Jailbreak pattern detection                           │ │   │
+│  │  └─────────────────────────────────────────────────────────┘ │   │
+│  │                         │                                     │   │
+│  │                         ▼                                     │   │
+│  │  ┌─────────────────────────────────────────────────────────┐ │   │
+│  │  │ [4] GEMINI LLM PROCESSING                               │ │   │
+│  │  │ • LangChain integration                                 │ │   │
+│  │  │ • Google Gemini API call                                │ │   │
+│  │  │ • Model: gemini-3.5-flash (configurable)                │ │   │
+│  │  └─────────────────────────────────────────────────────────┘ │   │
+│  │                         │                                     │   │
+│  │                         ▼                                     │   │
+│  │  ┌─────────────────────────────────────────────────────────┐ │   │
+│  │  │ [5] OUTPUT GUARD                                        │ │   │
+│  │  │ • Output validation                                     │ │   │
+│  │  │ • Length check (max 4000 chars)                         │ │   │
+│  │  └─────────────────────────────────────────────────────────┘ │   │
+│  │                         │                                     │   │
+│  └─────────────────────────┼─────────────────────────────────────┘   │
+│                            │                                         │
+│                    Response Generation                               │
+│                            │                                         │
+└────────────────────────────┬─────────────────────────────────────────┘
+                             │
+                    HTTP/REST API Response
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                       iOS SwiftUI Frontend                           │
+│                    (Display Results to User)                         │
+└─────────────────────────────────────────────────────────────────────┘
+
+External Services:
+┌──────────────────────────┐
+│  Google Gemini API       │
+│  (ai.google.dev)         │
+│  • Model: gemini-3.5     │
+│  • Authentication: API Key │
+└──────────────────────────┘
+```
 
 ---
 
